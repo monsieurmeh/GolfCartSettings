@@ -1,7 +1,7 @@
 ﻿using SonsSdk;
 using SUI;
 
-namespace GolfPlane;
+namespace GolfCartSettings;
 
 public class GolfCartSettings : SonsMod
 {
