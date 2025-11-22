@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ToniMacaroni/RedLoader/main/MetadataSchema.json",
+  "id": "GolfPlane",
+  "author": "You",
+  "version": "1.0.0",
+  "description": "Combines glider and golf cart. Why not?",
+  "gameVersion": "1.0.0",
+  "type": "Mod",
+  "url": "https://github.com/monsieurmeh/GolfPlane"
+}
