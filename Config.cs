@@ -26,8 +26,6 @@ public static class Config
     public static ConfigEntry<float> IdleAccelerationSmoothTime { get; private set; }
     public static ConfigEntry<float> AccelerationMaxSpeed { get; private set; }
     public static ConfigEntry<float> GravityForce { get; private set; }
-    public static ConfigEntry<float> WheelProfileBaseSpeed { get; private set; }
-    public static ConfigEntry<float> WheelProfileHighSpeed { get; private set; }
     public static ConfigEntry<float> BushBreakerMinSpeed { get; private set; }
     public static ConfigEntry<float> KnockdownDamageMinSpeed { get; private set; }
     public static ConfigEntry<float> ShoveCooldownTimer { get; private set; }
@@ -35,19 +33,7 @@ public static class Config
     public static ConfigEntry<float> ShoveUpForce { get; private set; }
     public static ConfigEntry<float> ShoveTorque { get; private set; }
     public static ConfigEntry<float> ShoveAccelerationFactor { get; private set; }
-    public static ConfigEntry<float> AudioAccelerationMin { get; private set; }
-    public static ConfigEntry<float> AudioAccelerationMax { get; private set; }
-    public static ConfigEntry<float> AudioBrakingMin { get; private set; }
-    public static ConfigEntry<float> AudioBrakingMax { get; private set; }
-    public static ConfigEntry<float> AudioSpeedMin { get; private set; }
-    public static ConfigEntry<float> AudioSpeedMax { get; private set; }
-    public static ConfigEntry<float> AudioBeepMinTime { get; private set; }
-    public static ConfigEntry<float> EngineLoadRpmThreshold { get; private set; }
-    public static ConfigEntry<float> WheelAudioWaterLevel { get; private set; }
-    public static ConfigEntry<float> AudioTractionSmoothDownFactor { get; private set; }
-    public static ConfigEntry<float> AudioTractionSmoothUpFactor { get; private set; }
     public static ConfigEntry<float> DeepWaterLevel { get; private set; }
-    public static ConfigEntry<float> DeepWaterThresholdIncreaseRate { get; private set; }
     public static ConfigEntry<float> MaxPower { get; private set; }
     public static ConfigEntry<float> MinPowerUsage { get; private set; }
     public static ConfigEntry<float> MaxPowerUsage { get; private set; }
@@ -87,8 +73,6 @@ public static class Config
         IdleAccelerationSmoothTime = Category.CreateEntry("IdleAccelerationSmoothTime", 0.6f, "Idle Accel Smooth Time", "Smoothing time for acceleration while idling.");
         AccelerationMaxSpeed = Category.CreateEntry("AccelerationMaxSpeed", 20f, "Acceleration Max Speed", "Max achievable acceleration speed.");
         GravityForce = Category.CreateEntry("GravityForce", 8f, "Gravity Force", "Additional gravity force multiplier.");
-        WheelProfileBaseSpeed = Category.CreateEntry("WheelProfileBaseSpeed", 5f, "Wheel Base Speed", "Base wheel rotation speed.");
-        WheelProfileHighSpeed = Category.CreateEntry("WheelProfileHighSpeed", 10f, "Wheel High Speed", "High-speed wheel rotation target.");
         BushBreakerMinSpeed = Category.CreateEntry("BushBreakerMinSpeed", 3f, "Bush Breaker Min Speed", "Minimum speed required to break bushes.");
         KnockdownDamageMinSpeed = Category.CreateEntry("KnockdownDamageMinSpeed", 7.25f, "Knockdown Min Speed", "Minimum speed to knock down obstacles.");
         ShoveCooldownTimer = Category.CreateEntry("ShoveCooldownTimer", 0.5f, "Shove Cooldown", "Time between shove actions.");
@@ -96,19 +80,7 @@ public static class Config
         ShoveUpForce = Category.CreateEntry("ShoveUpForce", 5f, "Shove Up Force", "Vertical shove force.");
         ShoveTorque = Category.CreateEntry("ShoveTorque", 0.05f, "Shove Torque", "Torque applied when shoving.");
         ShoveAccelerationFactor = Category.CreateEntry("ShoveAccelerationFactor", 0.1f, "Shove Acceleration Factor", "Multiplier on acceleration when shoving.");
-        AudioAccelerationMin = Category.CreateEntry("AudioAccelerationMin", -330f, "Audio Accel Min", "Minimum audio pitch on acceleration.");
-        AudioAccelerationMax = Category.CreateEntry("AudioAccelerationMax", 330f, "Audio Accel Max", "Maximum audio pitch on acceleration.");
-        AudioBrakingMin = Category.CreateEntry("AudioBrakingMin", 0f, "Audio Brake Min", "Minimum audio pitch on braking.");
-        AudioBrakingMax = Category.CreateEntry("AudioBrakingMax", 1f, "Audio Brake Max", "Maximum audio pitch on braking.");
-        AudioSpeedMin = Category.CreateEntry("AudioSpeedMin", -330f, "Audio Speed Min", "Minimum audio pitch based on speed.");
-        AudioSpeedMax = Category.CreateEntry("AudioSpeedMax", 330f, "Audio Speed Max", "Maximum audio pitch based on speed.");
-        AudioBeepMinTime = Category.CreateEntry("AudioBeepMinTime", 2f, "Audio Beep Min Time", "Minimum interval between beeps.");
-        EngineLoadRpmThreshold = Category.CreateEntry("EngineLoadRpmThreshold", 800f, "Engine Load RPM Threshold", "Engine load RPM threshold for audio/logic.");
-        WheelAudioWaterLevel = Category.CreateEntry("WheelAudioWaterLevel", 0.001f, "Wheel Audio Water Level", "Water level at which special wheel audio plays.");
-        AudioTractionSmoothDownFactor = Category.CreateEntry("AudioTractionSmoothDownFactor", 3f, "Audio Traction Down", "Smoothing downward traction audio.");
-        AudioTractionSmoothUpFactor = Category.CreateEntry("AudioTractionSmoothUpFactor", 3f, "Audio Traction Up", "Smoothing upward traction audio.");
         DeepWaterLevel = Category.CreateEntry("DeepWaterLevel", 1f, "Deep Water Level", "Depth considered as deep water.");
-        DeepWaterThresholdIncreaseRate = Category.CreateEntry("DeepWaterThresholdIncreaseRate", 0.5f, "Deep Water Threshold Rate", "Rate at which deep-water effects increase.");
         MaxPower = Category.CreateEntry("MaxPower", 1000f, "Max Power", "Maximum available power.");
         MinPowerUsage = Category.CreateEntry("MinPowerUsage", 0f, "Min Power Use", "Minimum passive power usage.");
         MaxPowerUsage = Category.CreateEntry("MaxPowerUsage", 4f, "Max Power Use", "Maximum power draw.");
@@ -122,6 +94,40 @@ public static class Config
 
     private static void SetConfigRanges()
     {
+        TorqueCurveMultiplier.SetRange(1f, 10000f);
+        TorqueCurveBoostMultiplier.SetRange(0f, 5f);
+        MaxBrakeTorque.SetRange(0f, 5000f);
+        HandBrakeTorque.SetRange(0f, 5000f);
+        AccelerationBrakeTorque.SetRange(0f, 1000f);
+        IdleBrakeTorqueFactor.SetRange(0f, 1f);
+        IdleBrakeSpeed.SetRange(0f, 5f);
+        SteeringWheelRotationMax.SetRange(0f, 180f);
+        SteeringSmoothTime.SetRange(0f, 5f);
+        CenterSteeringSmoothTime.SetRange(0f, 5f);
+        SteeringMaxSpeed.SetRange(0f, 50f);
+        SteeringMaxAngle.SetRange(0f, 180f);
+        AccelerationSmoothTime.SetRange(0f, 5f);
+        BrakingSmoothTime.SetRange(0f, 5f);
+        IdleBrakeDelayTime.SetRange(0f, 10f);
+        IdleAccelerationSmoothTime.SetRange(0f, 5f);
+        AccelerationMaxSpeed.SetRange(0f, 100f);
+        GravityForce.SetRange(0f, 20f);
+        BushBreakerMinSpeed.SetRange(0f, 20f);
+        KnockdownDamageMinSpeed.SetRange(0f, 50f);
+        ShoveCooldownTimer.SetRange(0f, 5f);
+        ShoveForce.SetRange(0f, 50f);
+        ShoveUpForce.SetRange(0f, 50f);
+        ShoveTorque.SetRange(0f, 5f);
+        ShoveAccelerationFactor.SetRange(0f, 5f);
+        DeepWaterLevel.SetRange(0f, 10f);
+        MaxPower.SetRange(0f, 5000f);
+        MinPowerUsage.SetRange(0f, 100f);
+        MaxPowerUsage.SetRange(0f, 100f);
+        SolarRechargeMultiplier.SetRange(0f, 5f);
+        SolarRechargeMax.SetRange(0f, 10f);
+        SolarRechargeMin.SetRange(0f, 10f);
+        ImpactMinChangeInVelocity.SetRange(0f, 50f);
+        ImpactMaxChangeInVelocity.SetRange(0f, 100f);
     }
 
     public static void OnSettingsUiClosed()
