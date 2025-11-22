@@ -10,6 +10,8 @@ public static class Config
     public static ConfigEntry<bool> DebugOutput { get; private set; }
     public static ConfigEntry<float> TorqueCurveMultiplier { get; private set; }
     public static ConfigEntry<float> TorqueCurveBoostMultiplier { get; private set; }
+    public static ConfigEntry<float> WheelProfileBaseSpeed { get; private set; }
+    public static ConfigEntry<float> WheelProfileHighSpeed { get; private set; }
     public static ConfigEntry<float> MaxBrakeTorque { get; private set; }
     public static ConfigEntry<float> HandBrakeTorque { get; private set; }
     public static ConfigEntry<float> AccelerationBrakeTorque { get; private set; }
@@ -55,8 +57,10 @@ public static class Config
     private static void InstantiateConfigs()
     {
         DebugOutput = Category.CreateEntry("DebugOutput", false, "Debug Output", "Logs debug output to console");
-        TorqueCurveMultiplier = Category.CreateEntry("TorqueCurveMultiplier", 1000f, "Torque Curve Multiplier", "Scales base torque curve.");
-        TorqueCurveBoostMultiplier = Category.CreateEntry("TorqueCurveBoostMultiplier", 1.8f, "Torque Boost Multiplier", "Additional torque boost multiplier.");
+        TorqueCurveMultiplier = Category.CreateEntry("TorqueCurveMultiplier", 10000f, "Torque Curve Multiplier", "Scales base torque curve.");
+        TorqueCurveBoostMultiplier = Category.CreateEntry("TorqueCurveBoostMultiplier", 25f, "Torque Boost Multiplier", "Additional torque boost multiplier.");
+        WheelProfileBaseSpeed = Category.CreateEntry("WheelProfileBaseSpeed", 20f, "Max Speed", "Non-boosted max speed.");
+        WheelProfileHighSpeed = Category.CreateEntry("WheelProfileHighSpeed", 100000f, "Max Speed (boosted)", "Boosted max speed.");
         MaxBrakeTorque = Category.CreateEntry("MaxBrakeTorque", 800f, "Maximum Brake Torque", "Maximum braking torque.");
         HandBrakeTorque = Category.CreateEntry("HandBrakeTorque", 1200f, "Handbrake Torque", "Torque applied by the handbrake.");
         AccelerationBrakeTorque = Category.CreateEntry("AccelerationBrakeTorque", 200f, "Acceleration Brake Torque", "Torque used for speed control during acceleration.");
@@ -72,15 +76,15 @@ public static class Config
         IdleBrakeDelayTime = Category.CreateEntry("IdleBrakeDelayTime", 1f, "Idle Brake Delay", "Delay before idle braking activates.");
         IdleAccelerationSmoothTime = Category.CreateEntry("IdleAccelerationSmoothTime", 0.6f, "Idle Accel Smooth Time", "Smoothing time for acceleration while idling.");
         AccelerationMaxSpeed = Category.CreateEntry("AccelerationMaxSpeed", 20f, "Acceleration Max Speed", "Max achievable acceleration speed.");
-        GravityForce = Category.CreateEntry("GravityForce", 8f, "Gravity Force", "Additional gravity force multiplier.");
+        GravityForce = Category.CreateEntry("GravityForce", 6f, "Gravity Force", "Additional gravity force multiplier.");
         BushBreakerMinSpeed = Category.CreateEntry("BushBreakerMinSpeed", 3f, "Bush Breaker Min Speed", "Minimum speed required to break bushes.");
-        KnockdownDamageMinSpeed = Category.CreateEntry("KnockdownDamageMinSpeed", 7.25f, "Knockdown Min Speed", "Minimum speed to knock down obstacles.");
+        KnockdownDamageMinSpeed = Category.CreateEntry("KnockdownDamageMinSpeed", 1f, "Knockdown Min Speed", "Minimum speed to knock down obstacles.");
         ShoveCooldownTimer = Category.CreateEntry("ShoveCooldownTimer", 0.5f, "Shove Cooldown", "Time between shove actions.");
-        ShoveForce = Category.CreateEntry("ShoveForce", 3f, "Shove Force", "Forward shove force.");
-        ShoveUpForce = Category.CreateEntry("ShoveUpForce", 5f, "Shove Up Force", "Vertical shove force.");
+        ShoveForce = Category.CreateEntry("ShoveForce", 10f, "Shove Force", "Forward shove force.");
+        ShoveUpForce = Category.CreateEntry("ShoveUpForce", 10f, "Shove Up Force", "Vertical shove force.");
         ShoveTorque = Category.CreateEntry("ShoveTorque", 0.05f, "Shove Torque", "Torque applied when shoving.");
         ShoveAccelerationFactor = Category.CreateEntry("ShoveAccelerationFactor", 0.1f, "Shove Acceleration Factor", "Multiplier on acceleration when shoving.");
-        DeepWaterLevel = Category.CreateEntry("DeepWaterLevel", 1f, "Deep Water Level", "Depth considered as deep water.");
+        DeepWaterLevel = Category.CreateEntry("DeepWaterLevel", 10f, "Deep Water Level", "Depth considered as deep water.");
         MaxPower = Category.CreateEntry("MaxPower", 1000f, "Max Power", "Maximum available power.");
         MinPowerUsage = Category.CreateEntry("MinPowerUsage", 0f, "Min Power Use", "Minimum passive power usage.");
         MaxPowerUsage = Category.CreateEntry("MaxPowerUsage", 4f, "Max Power Use", "Maximum power draw.");
@@ -94,8 +98,10 @@ public static class Config
 
     private static void SetConfigRanges()
     {
-        TorqueCurveMultiplier.SetRange(1f, 10000f);
-        TorqueCurveBoostMultiplier.SetRange(0f, 5f);
+        TorqueCurveMultiplier.SetRange(1f, 50000f);
+        TorqueCurveBoostMultiplier.SetRange(0f, 100f);
+        WheelProfileBaseSpeed.SetRange(1f, 100f);
+        WheelProfileHighSpeed.SetRange(100f, 100000f);
         MaxBrakeTorque.SetRange(0f, 5000f);
         HandBrakeTorque.SetRange(0f, 5000f);
         AccelerationBrakeTorque.SetRange(0f, 1000f);

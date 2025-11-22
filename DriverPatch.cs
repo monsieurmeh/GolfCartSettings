@@ -18,6 +18,8 @@ namespace GolfCartSettings
         {
             Console.WriteLine($"TorqueCurveMultiplier: {__instance.TorqueCurveMultiplier}");
             Console.WriteLine($"TorqueCurveBoostMultiplier: {__instance.TorqueCurveBoostMultiplier}");
+            Console.WriteLine($"WheelProfileBaseSpeed: {__instance.WheelProfileBaseSpeed}");
+            Console.WriteLine($"WheelProfileHighSpeed: {__instance.WheelProfileHighSpeed}");
             Console.WriteLine($"MaxBrakeTorque: {__instance.MaxBrakeTorque}");
             Console.WriteLine($"HandBrakeTorque: {__instance.HandBrakeTorque}");
             Console.WriteLine($"AccelerationBrakeTorque: {__instance.AccelerationBrakeTorque}");
@@ -57,6 +59,8 @@ namespace GolfCartSettings
         {
             __instance.TorqueCurveMultiplier = Config.TorqueCurveMultiplier.Value;
             __instance.TorqueCurveBoostMultiplier = Config.TorqueCurveBoostMultiplier.Value;
+            __instance.WheelProfileBaseSpeed = Config.WheelProfileBaseSpeed.Value;
+            __instance.WheelProfileHighSpeed = Config.WheelProfileHighSpeed.Value;
             __instance.MaxBrakeTorque = Config.MaxBrakeTorque.Value;
             __instance.HandBrakeTorque = Config.HandBrakeTorque.Value;
             __instance.AccelerationBrakeTorque = Config.AccelerationBrakeTorque.Value;
