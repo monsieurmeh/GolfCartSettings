@@ -57,10 +57,10 @@ public static class Config
     private static void InstantiateConfigs()
     {
         DebugOutput = Category.CreateEntry("DebugOutput", false, "Debug Output", "Logs debug output to console");
-        TorqueCurveMultiplier = Category.CreateEntry("TorqueCurveMultiplier", 10000f, "Torque Curve Multiplier", "Scales base torque curve.");
-        TorqueCurveBoostMultiplier = Category.CreateEntry("TorqueCurveBoostMultiplier", 25f, "Torque Boost Multiplier", "Additional torque boost multiplier.");
-        WheelProfileBaseSpeed = Category.CreateEntry("WheelProfileBaseSpeed", 20f, "Max Speed", "Non-boosted max speed.");
-        WheelProfileHighSpeed = Category.CreateEntry("WheelProfileHighSpeed", 100000f, "Max Speed (boosted)", "Boosted max speed.");
+        TorqueCurveMultiplier = Category.CreateEntry("TorqueCurveMultiplier", 1000f, "Torque Curve Multiplier", "Scales base torque curve.");
+        TorqueCurveBoostMultiplier = Category.CreateEntry("TorqueCurveBoostMultiplier", 100f, "Torque Boost Multiplier", "Additional torque boost multiplier.");
+        WheelProfileBaseSpeed = Category.CreateEntry("WheelProfileBaseSpeed", 20f, "Max Speed", "Non-boosted speed.");
+        WheelProfileHighSpeed = Category.CreateEntry("WheelProfileHighSpeed", 500f, "Max Speed (boosted)", "Boosted speed.");
         MaxBrakeTorque = Category.CreateEntry("MaxBrakeTorque", 800f, "Maximum Brake Torque", "Maximum braking torque.");
         HandBrakeTorque = Category.CreateEntry("HandBrakeTorque", 1200f, "Handbrake Torque", "Torque applied by the handbrake.");
         AccelerationBrakeTorque = Category.CreateEntry("AccelerationBrakeTorque", 200f, "Acceleration Brake Torque", "Torque used for speed control during acceleration.");
